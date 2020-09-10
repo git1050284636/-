@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.smbms.dao.provider.ProviderMapper">
+
+
+    <insert id="add">
+        insert into smbms_provider (proCode,proName,proDesc,proContact,proPhone,proAddress,proFax,createdBy,creationDate,idPicPath,workPicPath)
+        values(#{proCode},#{proName},#{proDesc},#{proContact},#{proPhone},#{proAddress},#{proFax},#{createdBy},#{creationDate},#{workPicPath},#{idPicPath})
+    </insert>
+
+    <update id="modify">
+        update smbms_provider
+        <set>
+            <if test="proName!=null">
+                proName=#{proName},
+            </if>
+            <if test="proDesc!=null">
+                proDesc=#{proDesc},
+            </if>
+            <if test="proContact!=null">
+                proContact=#{proContact},
+            </if>
+            <if test="proPhone!=null">
+                proPhone=#{proPhone},
+            </if>
+            <if test="proAddress!=null">
+                proAddress=#{proAddress},
+            </if>
+            <if test="proFax!=null">
+                proFax=#{proFax},
+            </if>
+            <if test="modifyBy!=null">
+                modifyBy=#{modifyBy},
+            </if>
+            <if test="modifyDate!=null">
+                modifyDate=#{modifyDate},
+            </if>
+            <if test="idPicPath!=null">
+                idPicPath=#{idPicPath}
+            </if>
+            <if test="workPicPath!=null">
+                workPicPath=#{workPicPath}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteProviderById">
+        delete from smbms_provider where id=#{delId}
+    </delete>
+
+    <select id="getProviderList" resultType="cn.smbms.pojo.Provider">
+        select * from smbms_provider
+        <where>
+            <if test="proName !=null and proName!=''">and proName like concat('%',#{proName},'%')</if>
+            <if test="proCode !=null ">and proCode like concat('%',#{proCode},'%')</if>
+        </where>
+    </select>
+
+    <select id="getProviderById" resultType="cn.smbms.pojo.Provider">
+        select * from smbms_provider where id=#{id}
+    </select>
+    <select id="getLoginProvider" resultType="cn.smbms.pojo.Provider">
+        select * from smbms_provider where proCode=#{proCode}
+    </select>
+
+
+
+
+</mapper>
